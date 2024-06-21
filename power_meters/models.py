@@ -36,6 +36,37 @@ class Meter(models.Model):
     ratio = models.FloatField(default=20)
     def __str__(self):
         return self.name
+    
+class SecondMeasurements(models.Model):
+    meter = models.ForeignKey(Meter,models.CASCADE)
+    rms = models.FloatField("RMS Value")
+    whr = models.FloatField("Watt Hour")
+    raw_peak = models.IntegerField("Highest Raw Value")
+    raw_min = models.IntegerField("Lowest Raw Value")
+
+class MinuteMeasurements(models.Model):
+    meter = models.ForeignKey(Meter,models.CASCADE)
+    rms = models.FloatField("Average RMS Value")
+    whr = models.FloatField("Watt Hour")
+    
+class HourlyMeasurements(models.Model):
+    meter = models.ForeignKey(Meter,models.CASCADE)
+    rms = models.FloatField("Average RMS Value")
+    whr = models.FloatField("Watt Hour")
+    peak_rms = models.FloatField("Highest RMS Value")
+    
+
+class DailyMeasurements(models.Model):
+    meter = models.ForeignKey(Meter,models.CASCADE)
+    rms = models.FloatField("Average RMS Value")
+    whr = models.FloatField("Watt Hour")
+    peak_hr = models.IntegerField("Peak Demand Hour")
+    peak_hr_usage = models.FloatField("Wh Usage at Peak Hour")
+    peak_rms = models.FloatField("Highest RMS Value")
+    peak_demand_period = models.IntegerField("Peak Demand Period")
+    peak_demand_usage = models.FloatField("Wh Usage at Peak Period")
+    
+    
 
     
         
