@@ -20,4 +20,5 @@ from django.urls import path, include
 urlpatterns = [
     path('power_meters/', include("power_meters.urls")),
     path('admin/', admin.site.urls),
+    
 ]

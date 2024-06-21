@@ -34,6 +34,8 @@ class Meter(models.Model):
     meter_type = models.ForeignKey(MeterType, models.PROTECT)
     associated_voltage_meter = models.ForeignKey('self', models.PROTECT,blank=True)
     ratio = models.FloatField(default=20)
+    active = models.BooleanField(default = True)
+    
     def __str__(self):
         return self.name
     
@@ -43,17 +45,20 @@ class SecondMeasurements(models.Model):
     whr = models.FloatField("Watt Hour")
     raw_peak = models.IntegerField("Highest Raw Value")
     raw_min = models.IntegerField("Lowest Raw Value")
+    aggregated = models.BooleanField("Data has been aggregated", default = "False")
 
 class MinuteMeasurements(models.Model):
     meter = models.ForeignKey(Meter,models.CASCADE)
     rms = models.FloatField("Average RMS Value")
     whr = models.FloatField("Watt Hour")
+    aggregated = models.BooleanField("Data has been aggregated", default = "False")
     
 class HourlyMeasurements(models.Model):
     meter = models.ForeignKey(Meter,models.CASCADE)
     rms = models.FloatField("Average RMS Value")
     whr = models.FloatField("Watt Hour")
     peak_rms = models.FloatField("Highest RMS Value")
+    aggregated = models.BooleanField("Data has been aggregated", default = "False")
     
 
 class DailyMeasurements(models.Model):
@@ -65,9 +70,17 @@ class DailyMeasurements(models.Model):
     peak_rms = models.FloatField("Highest RMS Value")
     peak_demand_period = models.IntegerField("Peak Demand Period")
     peak_demand_usage = models.FloatField("Wh Usage at Peak Period")
+    aggregated = models.BooleanField("Data has been aggregated", default = "False")
     
-    
-
+class MonthlyMeasurements(models.Model):
+    meter = models.ForeignKey(Meter,models.CASCADE)
+    rms = models.FloatField("Average RMS Value")
+    whr = models.FloatField("Watt Hour")
+    peak_day = models.IntegerField("Peak Demand Hour")
+    peak_day_usage = models.FloatField("Wh Usage at Peak Hour")
+    peak_rms = models.FloatField("Highest RMS Value")
+    peak_demand_period = models.IntegerField("Peak Demand Period")
+    peak_demand_usage = models.FloatField("Wh Usage at Peak Period")
     
         
     

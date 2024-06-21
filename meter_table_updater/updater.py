@@ -1,8 +1,8 @@
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
-from forecastUpdater import forecastApi
+from meter_table_updater import process_data 
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(meter_table_updater.update_minutes, 'interval', minutes=1)
+    scheduler.add_job(process_data.process_updates, 'interval', minutes=1)
     scheduler.start()
